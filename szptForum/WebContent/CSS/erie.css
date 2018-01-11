@@ -1,0 +1,62 @@
+.erie_pop {
+    padding: 4px;
+    border: 1px solid rgb(221, 221, 221);
+    min-width: 60px;
+    background: none repeat scroll 0% 0% rgb(254, 254, 254);
+    box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.3);
+}
+.erie_pop li{
+	display: block;
+	width: 100%;
+	padding: 5px 0;
+	border-bottom: 1px solid rgb(229, 237, 242);
+}
+.erie_pop li:hover{
+	background-color: #E5EDF2;
+	color: #336699;
+}
+.setread {
+	cursor: pointer;
+	width: 12px;
+	height: 12px;
+	background: url("../../../../static/image/common/close.gif") no-repeat scroll 0px 0px transparent;
+	margin-right: 5px;
+	display: block;
+	float: right;
+}
+.setread:hover{
+	background-position: 0 -12px;
+}
+.prompt_item .note{
+	min-height: 48px;
+	min-width: 300px;
+	background-repeat: no-repeat;
+	background-position: top left;
+	padding-left: 58px;
+	word-wrap: break-word;
+	margin: 0 5px;
+}
+.prompt_item{
+	min-width: 300px;
+	max-width: 500px;
+}
+.prompt_list .summary {
+    margin-left: 2em;
+    padding-left: 10px;
+    border-left: 1px solid rgb(205, 205, 205);
+}
+.prompt_item a{
+	color: #336699;
+	font-weight: bold;
+}
+.erie_tip{
+	text-align: center;
+	color: #aaa;
+}
+li.prompt_bottom,li.prompt_bottom:hover{
+	background-color: #eee;
+}
+.prompt_bottom_span{
+	width: 100%;
+	text-align: center;
+}

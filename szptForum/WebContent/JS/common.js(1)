@@ -1,0 +1,23 @@
+setTimeout(function(){
+	ajaxget('plugin.php?id=erie_notifyplus:get_list', 'prompt_list','none','none','none');
+	var showM = function(e){
+		showMenu({'ctrlid':'myprompt','menuid':'prompt_list','ctrlclass':'hover','duration':2,'maxh':500,'pos':'34!'});
+		e.stopImmediatePropagation();
+	};
+	try{
+		$('myprompt').addEventListener('mouseover',showM,true);
+	}catch(e){
+		$('myprompt').attachEvent('onmouseover',showM);
+	}
+},500);
+function erie_notify_a(e,id){
+	var prefix = 'plugin.php?id=erie_notifyplus:go&go_id='+id+'&url=';
+	if(e.href.search('erie_notifyplus:go')<0){
+		//没有附加过
+		e.href = prefix + encodeURIComponent(e.href);
+	}
+}
+function erie_notify_setread(id){
+	//设为已读
+	ajaxget('plugin.php?id=erie_notifyplus:go&go_id='+id, 'prompt_'+id);
+}
