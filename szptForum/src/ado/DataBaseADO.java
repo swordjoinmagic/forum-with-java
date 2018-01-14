@@ -5,6 +5,7 @@ import java.util.*;
 
 import bean.forum.Post;
 import bean.forum.PostComment;
+import bean.forum.PostCommentMiddleComment;
 
 public class DataBaseADO {
 	private final static DataBaseADO ADO = new DataBaseADO();
@@ -17,7 +18,10 @@ public class DataBaseADO {
 
 	private PreparedStatement prestate = null;
 	private DataBaseADO() {
-
+		String driver = "com.mysql.jdbc.Driver";
+		String url = "jdbc:mysql://127.0.0.1:3306/szpt_forum";
+		String user = "root";
+		String password = "09043330";
 		try {
 			Class.forName(driver);
 			conn = DriverManager.getConnection(url,user,password);
@@ -166,5 +170,52 @@ public class DataBaseADO {
 			e.printStackTrace();
 		}
 		return list;
+	}
+	// 根据帖子id和回复的楼层，得到这一层楼所有的评论（简称楼中楼）
+	public List<PostCommentMiddleComment>getAllpostcomment_middle_comment(int postid,int height){
+		List<PostCommentMiddleComment>list = new ArrayList<>();
+		String sql = "select * from posts_comment_middle_comment where postid=? and height=?";
+		ResultSet rs = this.prequery_auto(sql, postid,height);
+		try {
+			while(rs.next()) {
+				PostCommentMiddleComment pcmc = new PostCommentMiddleComment();
+				pcmc.setContent(rs.getString("content"));
+				pcmc.setHeight(height);
+				pcmc.setPostid(postid);
+				pcmc.setTime(rs.getTimestamp("time"));
+				pcmc.setUsername(rs.getString("username"));
+				list.add(pcmc);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list.size()==0?null:list;
+	}
+	//根据页面page参数，获得page*10-page*10+10位置的数据
+	public List<Post>GetPostWithPage(int page){
+		List<Post>list = new ArrayList<Post>();
+		String sql = "select * from posts limit ?,?";
+		try {
+			PreparedStatement prestmt = this.conn.prepareStatement(sql);
+			prestmt.setInt(1, page*10);
+			prestmt.setInt(2, 10);
+			ResultSet rs = prestmt.executeQuery();
+		
+			while(rs.next()) {
+				Post post = new Post();
+				post.setCreatetime(rs.getTimestamp("createtime"));
+				post.setCreatorname(rs.getString("creatorname"));
+				post.setId(rs.getInt("id"));
+				post.setTitle(rs.getString("title"));
+				post.setReplycount(rs.getInt("replycount"));
+				post.setViewcount(rs.getInt("viewcount"));
+				list.add(post);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list.size()==0?null:list;
 	}
 }

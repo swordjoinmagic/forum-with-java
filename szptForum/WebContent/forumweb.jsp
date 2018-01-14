@@ -1,3 +1,4 @@
+<%@page import="bean.forum.PostCommentMiddleComment"%>
 <%@page import="ado.DataBaseADO"%>
 <%@page import="bean.forum.PostComment"%>
 <%@page import="java.util.*" %>
@@ -31,9 +32,9 @@
 			<tr>
 				<td class="pls ptn pbn">
 					<div class="hm ptn">
-						<span class="xg1">查看:</span> <span class="xi1">14928</span><span
+						<span class="xg1">查看:</span> <span class="xi1">${post.getViewcount()}</span><span
 							class="pipe">|</span><span class="xg1">回复:</span> <span
-							class="xi1">69</span>
+							class="xi1">${post.getReplycount()}</span>
 					</div>
 				</td>
 				<td class="plc ptm pbn vwthd">
@@ -45,6 +46,17 @@
 		</tbody>
 	</table>
 	
+	<!-- 分割线 -->
+	<table cellspacing="0" cellpadding="0" class="ad">
+		<tbody>
+			<tr>
+				<td class="pls">
+				</td>
+				<td class="plc">
+				</td>
+			</tr>
+		</tbody>
+	</table>
 	
 	<%//将数据库中的所有对该帖子的回复都拿出来  %>
 	<c:forEach items="${postcommentlist}" var="postcomment">
@@ -53,7 +65,7 @@
 			<table class="plhin"
 				cellspacing="0" cellpadding="0">
 				<tbody>
-					<!--评论主体-->
+					<!--楼层回复主体-->
 					<tr>
 						<!--发表评论时的左侧头像框-->
 						<td class="pls" rowspan="2">
@@ -124,44 +136,46 @@
 	
 							<div class="ptc">
 								<div class="pcb">
-									<!--发表评论具体信息-->
+									<!--发表回复具体信息-->
 									<div class="t_fsz">
 										${postcomment.getContent()}
 									</div>
-									<!--对一个楼层的点评-->
-									<div class="cm">
-										<!--点评图标-->
-										<h3 class="psth xs1"><span class="icon_ring vm"></span>点评</h3>
-										<!--具体点评信息-->
-										<div class="pstl xs1 cl">
-											<!--名称与头像-->
-											<div class="psta vm">
-												<a href="#" c="1"><img src="#"></a>
-												<a href="#" class="xi2 xw1">上贺茂润</a>
-											</div>
-											<!--具体信息-->
-											<div class="psti">
-												我不是版主&nbsp;
-											<!--发表时间-->
-											<span class="xg1">
-												发表于 2015-9-29 13:42</span>
-											</div>
-										</div>
-										<div class="pstl xs1 cl">
-											<!--名称与头像-->
-											<div class="psta vm">
-												<a href="#" c="1"><img src="#"></a>
-												<a href="#" class="xi2 xw1">上贺茂润</a>
-											</div>
-											<!--具体信息-->
-											<div class="psti">
-												我不是版主&nbsp;
-											<!--发表时间-->
-											<span class="xg1">
-												发表于 2015-9-29 13:42</span>
-											</div>
-										</div>
-									</div>								
+									
+									<% 
+										int postid = post.getId();
+										int height = ((PostComment)pageContext.getAttribute("postcomment")).getHeight();
+										System.out.println("height:"+height);
+										DataBaseADO ado = DataBaseADO.getAdo();
+										List<PostCommentMiddleComment>postcmclist = ado.getAllpostcomment_middle_comment(postid, height);
+										request.setAttribute("postcmclist", postcmclist);
+									%>
+									<%// 如果该楼层有评论，那么将他的全部评论都显示出来~ %>
+									<c:if test="<%=postcmclist==null?false:true %>">
+										<!--对一个楼层的点评-->
+										<div class="cm">
+											<!--点评图标-->
+											<h3 class="psth xs1"><span class="icon_ring vm"></span>点评</h3>
+											
+											<%//循环显示所有楼层评论信息 %>
+											<c:forEach items="${postcmclist}" var="postcmc">
+												<!--具体点评信息-->
+												<div class="pstl xs1 cl">
+													<!--名称与头像-->
+													<div class="psta vm">
+														<a href="#" c="1"><img src="#"></a>
+														<a href="#" class="xi2 xw1">${postcmc.getUsername()}</a>
+													</div>
+													<!--具体信息-->
+													<div class="psti">
+														${postcmc.getContent()}
+													<!--发表时间-->
+													<span class="xg1">
+														发表于 ${postcmc.getTime()}</span>
+													</div>
+												</div>											
+											</c:forEach>
+										</div>										
+									</c:if>							
 								</div>
 							</div>
 						</td>
