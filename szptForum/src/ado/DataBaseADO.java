@@ -146,6 +146,25 @@ public class DataBaseADO {
 	} 
 	
 	
+	/*========================================*/
+	/*用户部分	  								  */
+	/*========================================*/
+	//根据用户名和password查询，查看是否有这个用户，如果没有，那么返回false
+	public boolean checkUserAndPassword(String username,String password) {
+		String sql = "select * from user where name=? and password=?";
+		ResultSet rs = this.prequery_auto(sql, username,password);
+		try {
+			if(rs.next()) {
+				return true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	
 	
 	/*========================================*/
 	/*帖子部分	  								  */
@@ -164,7 +183,6 @@ public class DataBaseADO {
 				postcomment.setContent(rs.getString("content"));
 				postcomment.setAgreecount(rs.getInt("agreecount"));
 				postcomment.setAgainstcount(rs.getInt("againstcount"));
-				postcomment.setHeight(rs.getInt("height"));
 				list.add(postcomment);
 			}
 		} catch (SQLException e) {
@@ -221,6 +239,19 @@ public class DataBaseADO {
 		}
 		return list.size()==0?null:list;
 	}
+	//根据帖子id，获得这个帖子的回复数量,也相当于楼层吧
+	public long getPostReplyCount(int id) {
+		String sql = "select * from posts where id=?";
+		ResultSet rs = this.prequery_auto(sql, id);
+		try {
+			rs.last();
+			return rs.getRow();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
+	}
 	
 	/*========================================*/
 	/*板块部分	  								  */
@@ -261,5 +292,41 @@ public class DataBaseADO {
 			e.printStackTrace();
 		}
 		return list;
+	}
+	// 计算一个板块的所有帖子数量
+	public long getPostCount(int plateid) {
+		String sql = "select * from posts where plateid=?";
+		ResultSet rs = this.prequery_auto(sql, plateid);
+		long count = 0;
+		try {
+			rs.last();
+			return rs.getRow();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return count;
+	}
+	//得到一个板块的最新发表的一个帖子
+	public Post getLastlyPost(int plateid) {
+		String sql = "select * from posts where plateid=?";
+		ResultSet rs = this.prequery_auto(sql, plateid);
+		try {
+			if(rs.next()) {
+				Post post = new Post();
+				post.setId(rs.getInt("id"));
+				post.setTitle(rs.getString("title"));
+				post.setCreatorname(rs.getString("creatorname"));
+				post.setPlateid(rs.getInt("plateid"));
+				post.setReplycount(rs.getInt("replycount"));
+				post.setCreatetime(rs.getTimestamp("createtime"));
+				post.setViewcount(rs.getInt("viewcount"));
+				return post;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

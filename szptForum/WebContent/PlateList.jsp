@@ -55,17 +55,24 @@
 								</div>
 								<dl style="margin-left: 64px;">
 									<dt>
-										<a href="">${plates.getName()}</a>
+										<a href="PlateWeb.jsp?pid=${plates.getId()}&page=1">${plates.getName()}</a>
 									</dt>
 									<dd>
-										<em>主题: 496</em>, <em>帖数: <span title="37175">3万</span></em>
+										<em>帖数: <span title="37175"><%
+											Plates p = (Plates)(pageContext.getAttribute("plates"));
+											out.print(ado.getPostCount(p.getId()));
+										%></span></em>
 									</dd>
 									<dd>
+										<%
+											Post lastlypost = ado.getLastlyPost(p.getId());
+											pageContext.setAttribute("lastlypost", lastlypost);
+										%>
 										<a
 											href="#"
-											class="xi2">【短十】数码物语-第三章 [宠物 ...</a> <cite><span
-											title="2018-1-13 00:03">昨天&nbsp;00:03</span> <a
-											href="#">寡人</a></cite>
+											class="xi2">【${lastlypost.getTitle()}】</a> <cite><span
+											title="2018-1-13 00:03">${lastlypost.getCreatetime()}</span> <a
+											href="#">${lastlypost.getCreatorname()}</a></cite>
 									</dd>
 								</dl>
 							</td>

@@ -15,9 +15,6 @@
 	if(p!=null){
 		mypage = Integer.parseInt(p);
 	}
-	System.out.println(mypage);
-	log("Fuck");
-	
 	DataBaseADO ado = DataBaseADO.getAdo();
 	List<Post>postlist = ado.GetPostWithPage(mypage,plateid);
 	request.setAttribute("postlist", postlist);
@@ -114,7 +111,7 @@
 						<td class="icn"><a
 							href="#" title="新窗口打开"
 							target="_blank"><img
-							src="static/image/common/folder_common.gif"></a>
+							src="Image/folder_new.gif"></a>
 						</td>
 						<!--一个帖子的通常信息(如：标题)-->
 						<th class="common">
@@ -122,11 +119,11 @@
 							<em>
 								<a title="原创发布" href="#">
 									<img style="vertical-align: middle; padding-right: 4px;"
-										src="/data/attachment/common/skin/XP发布.gif" alt="原创发布">
+										src="Image/mv-3.png" alt="原创发布">
 								</a>
 							</em>
 							<!--帖子标题-->
-							<a href="#" class="s xst">${post.getTitle()}</a></th>
+							<a href="postweb.jsp?id=${post.getId()}" class="s xst">${post.getTitle()}</a></th>
 						<!--作者和发表时间-->
 						<td class="by"><cite><a
 								href="#" c="1"

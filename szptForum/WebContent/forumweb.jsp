@@ -127,7 +127,12 @@
 								<!--表示现在是几楼-->
 								<strong> <a
 									href="#"> 
-									<em> ${postcomment.getHeight()} </em>楼
+									<em> <%
+										DataBaseADO ado=DataBaseADO.getAdo();
+										PostComment postcomment = (PostComment)pageContext.getAttribute("postcomment");
+										int id = postcomment.getPostid()+1;
+										out.print(ado.getPostReplyCount(id));
+									%> </em>楼
 								</a>
 								</strong>
 								<div class="pti">
@@ -150,7 +155,6 @@
 										int postid = post.getId();
 										int height = ((PostComment)pageContext.getAttribute("postcomment")).getHeight();
 										System.out.println("height:"+height);
-										DataBaseADO ado = DataBaseADO.getAdo();
 										List<PostCommentMiddleComment>postcmclist = ado.getAllpostcomment_middle_comment(postid, height);
 										request.setAttribute("postcmclist", postcmclist);
 									%>
