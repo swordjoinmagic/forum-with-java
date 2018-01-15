@@ -55,7 +55,7 @@
 								</div>
 								<dl style="margin-left: 64px;">
 									<dt>
-										<a href="#">${plates.getName()}</a>
+										<a href="">${plates.getName()}</a>
 									</dt>
 									<dd>
 										<em>主题: 496</em>, <em>帖数: <span title="37175">3万</span></em>

@@ -10,14 +10,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%
 	String p = request.getParameter("page");
+	int plateid = Integer.parseInt(request.getParameter("pid"));
 	int mypage = 0;
 	if(p!=null){
 		mypage = Integer.parseInt(p);
 	}
-	
+	System.out.println(mypage);
+	log("Fuck");
 	
 	DataBaseADO ado = DataBaseADO.getAdo();
-	List<Post>postlist = ado.GetPostWithPage(mypage);
+	List<Post>postlist = ado.GetPostWithPage(mypage,plateid);
 	request.setAttribute("postlist", postlist);
 %>
 <head>

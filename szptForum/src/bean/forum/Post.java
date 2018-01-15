@@ -71,6 +71,7 @@ public class Post {
 				this.replycount = rs.getInt("replycount");
 				this.viewcount = rs.getInt("viewcount");
 				this.createtime = rs.getTimestamp("createtime");
+				this.plateid = rs.getInt("plateid");
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

@@ -10,9 +10,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<%
-		pageContext.setAttribute("a", 1);
-	%>
-	<p>${a}</p>
+	<jsp:include page="includeTest.jsp" >
+		<jsp:param value="111" name="aaa"/>
+	</jsp:include>
 </body>
 </html>

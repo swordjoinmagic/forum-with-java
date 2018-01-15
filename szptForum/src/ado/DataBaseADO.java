@@ -194,14 +194,15 @@ public class DataBaseADO {
 		}
 		return list.size()==0?null:list;
 	}
-	//根据页面page参数，获得page*10-page*10+10位置的数据
-	public List<Post>GetPostWithPage(int page){
+	//根据页面page参数，获得page*10-page*10+10位置的数据,plateid:帖子所属板块id
+	public List<Post>GetPostWithPage(int page,int plateid){
 		List<Post>list = new ArrayList<Post>();
-		String sql = "select * from posts limit ?,?";
+		String sql = "select * from posts where plateid=? limit ?,?";
 		try {
 			PreparedStatement prestmt = this.conn.prepareStatement(sql);
-			prestmt.setInt(1, page*10);
-			prestmt.setInt(2, 10);
+			prestmt.setInt(1, plateid);
+			prestmt.setInt(2, page*10);
+			prestmt.setInt(3, 10);
 			ResultSet rs = prestmt.executeQuery();
 		
 			while(rs.next()) {
@@ -220,7 +221,7 @@ public class DataBaseADO {
 		}
 		return list.size()==0?null:list;
 	}
-
+	
 	/*========================================*/
 	/*板块部分	  								  */
 	/*========================================*/
