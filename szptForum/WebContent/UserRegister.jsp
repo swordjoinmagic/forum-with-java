@@ -1,3 +1,8 @@
+<%
+	/*
+		用于展示帖子列表的jsp文件
+	*/
+%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 

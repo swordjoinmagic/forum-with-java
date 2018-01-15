@@ -3,6 +3,8 @@ package ado;
 import java.sql.*;
 import java.util.*;
 
+import bean.forum.BigPlates;
+import bean.forum.Plates;
 import bean.forum.Post;
 import bean.forum.PostComment;
 import bean.forum.PostCommentMiddleComment;
@@ -217,5 +219,46 @@ public class DataBaseADO {
 			e.printStackTrace();
 		}
 		return list.size()==0?null:list;
+	}
+
+	/*========================================*/
+	/*板块部分	  								  */
+	/*========================================*/
+	//找到所有大板块部分,返回一个列表
+	public List<BigPlates>getAllBigPlates(){
+		List<BigPlates>list = new ArrayList<>();
+		String sql = "select * from bigplates";
+		ResultSet rs = this.queryselect(sql);
+		try {
+			while(rs.next()) {
+				BigPlates bp = new BigPlates();
+				bp.setId(rs.getInt("id"));
+				bp.setName(rs.getString("name"));
+				list.add(bp);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+	//根据大板块的id，找到该大板块下的所有小版块
+	public List<Plates>getAllPlates(int BigPlatesId){
+		List<Plates>list = new ArrayList<>();
+		String sql = "select * from plates where bigplates=?";
+		ResultSet rs = this.prequery_auto(sql, BigPlatesId);
+		try {
+			while(rs.next()) {
+				Plates plates = new Plates();
+				plates.setId(rs.getInt("id"));
+				plates.setName(rs.getString("name"));
+				plates.setBigplatesid(rs.getInt("bigplates"));
+				list.add(plates);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
 	}
 }

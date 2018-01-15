@@ -1,3 +1,8 @@
+<%
+	/*
+		用于展示帖子列表的jsp文件
+	*/
+%>
 <%@page import="ado.DataBaseADO,java.util.*,bean.forum.Post"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>

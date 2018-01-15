@@ -1,3 +1,8 @@
+<%
+	/*
+		用于展示一个具体的帖子的内容
+	*/
+%>
 <%@page import="bean.forum.PostCommentMiddleComment"%>
 <%@page import="ado.DataBaseADO"%>
 <%@page import="bean.forum.PostComment"%>
