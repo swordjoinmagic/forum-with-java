@@ -126,13 +126,8 @@
 							<div class="pi">
 								<!--表示现在是几楼-->
 								<strong> <a
-									href="#"> 
-									<em> <%
-										DataBaseADO ado=DataBaseADO.getAdo();
-										PostComment postcomment = (PostComment)pageContext.getAttribute("postcomment");
-										int id = postcomment.getPostid()+1;
-										out.print(ado.getPostReplyCount(id));
-									%> </em>楼
+									href="#">
+									<em>${postcomment.getHeight()}</em>楼
 								</a>
 								</strong>
 								<div class="pti">
@@ -152,11 +147,14 @@
 									</div>
 									
 									<% 
+										
 										int postid = post.getId();
 										int height = ((PostComment)pageContext.getAttribute("postcomment")).getHeight();
 										System.out.println("height:"+height);
+										DataBaseADO ado = DataBaseADO.getAdo();
 										List<PostCommentMiddleComment>postcmclist = ado.getAllpostcomment_middle_comment(postid, height);
 										request.setAttribute("postcmclist", postcmclist);
+										
 									%>
 									<%// 如果该楼层有评论，那么将他的全部评论都显示出来~ %>
 									<c:if test="<%=postcmclist==null?false:true %>">
@@ -199,7 +197,7 @@
 							<div class="po hin">
 								<div class="pob cl">
 									<em> 
-										<a class="cmmnt" href="#">点评</a>
+										<a class="cmmnt" onclick="$('#reply${postcomment.getHeight()}').css('display','inline');">点评</a>
 										<a class="fastre" href="#">回复</a> 
 										<a class="replyadd" href="#">支持
 											<span>${postcomment.getAgreecount()}</span>
@@ -209,6 +207,18 @@
 										</a>
 									</em>
 								</div>
+								<form method="post" action="/szptForum/CreatePostCommentMiddleComment.bin" style="display:none;" id="reply${postcomment.getHeight()}">
+									<input type="hidden" name="postid" value="${postcomment.getPostid()}"/>
+									<input type="hidden" name="height" value="${postcomment.getHeight()}"/>
+									
+									<div class="pob cl">
+										<input type="text" style="margin-left:20px;" size="50" name="editorValue" />
+									    <p>	 
+									    &nbsp;
+										</p>
+									    <button type="submit">提交</button>
+									</div>
+								</form>
 							</div>
 						</td>
 					</tr>

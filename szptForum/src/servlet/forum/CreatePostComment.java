@@ -72,7 +72,7 @@ public class CreatePostComment extends HttpServlet{
 				ado.InsertPost(plateid, author, PostTitle);
 				// 向数据库插入一个帖子评论
 				int id = ado.getIDPostLast(Integer.parseInt(plateid));
-				ado.InsertPostComment(id, author, editorValue);
+				ado.InsertPostComment(id, author, editorValue,1);
 				
 				// 重定向到帖子页面
 				response.sendRedirect("postweb.jsp?id="+id);
@@ -82,8 +82,12 @@ public class CreatePostComment extends HttpServlet{
 					response.sendRedirect("CreatePost.jsp?postid="+postid);
 					return;
 				}
+				
+				// 获得帖子的楼层
+				int height = ado.getPostCommentCount(Integer.parseInt(postid));
+								
 				// 对帖子发表评论
-				ado.InsertPostComment(Integer.parseInt(postid), author, editorValue);
+				ado.InsertPostComment(Integer.parseInt(postid), author, editorValue,height+1);
 				// 重定向到帖子页面
 				response.sendRedirect("postweb.jsp?id="+postid);				
 			}

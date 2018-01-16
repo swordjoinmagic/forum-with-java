@@ -183,6 +183,7 @@ public class DataBaseADO {
 				postcomment.setContent(rs.getString("content"));
 				postcomment.setAgreecount(rs.getInt("agreecount"));
 				postcomment.setAgainstcount(rs.getInt("againstcount"));
+				postcomment.setHeight(rs.getInt("height"));
 				list.add(postcomment);
 			}
 		} catch (SQLException e) {
@@ -270,7 +271,7 @@ public class DataBaseADO {
 		}
 		return 0;
 	}
-
+	
 	/*========================================*/
 	/*板块部分	  								  */
 	/*========================================*/
@@ -373,9 +374,27 @@ public class DataBaseADO {
 		return null;
 		
 	}
-	// 简单的根据postid,username,content插入一个帖子评论
-	public boolean InsertPostComment(int postid,String username,String content) {
-		String sql = "insert into post_comment(postid,username,content) values(?,?,?)";
-		return this.preinsert_auto(sql, postid,username,content);
+	// 简单的根据postid,username,content,height插入一个帖子评论
+	public boolean InsertPostComment(int postid,String username,String content,int height) {
+		String sql = "insert into post_comment(postid,username,content,height) values(?,?,?,?)";
+		return this.preinsert_auto(sql, postid,username,content,height);
+	}
+	// 获得一个根据一个帖子的id，获得这个帖子的所有评论的数量
+	public int getPostCommentCount(int postid) {
+		String sql = "select * from post_comment where postid=?";
+		ResultSet rs = this.prequery_auto(sql, postid);
+		try {
+			rs.last();
+			return rs.getRow();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 1;
+	}
+	// 根据一个帖子评论的id和楼层和内容和用户名插入一个楼中楼评论
+	public boolean InsertPostCommentMiddleComment(int postid,int height,String username,String content) {
+		String sql = "insert into posts_comment_middle_comment(postid,username,height,content) values(?,?,?,?)";
+		return this.preinsert_auto(sql,postid,username,height,content);
 	}
 }
