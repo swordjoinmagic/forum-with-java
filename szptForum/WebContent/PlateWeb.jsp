@@ -20,5 +20,9 @@
 				<jsp:param value="${page}" name="page"/>
 			</jsp:include>
 		</div>
+		<jsp:include page="PostListTail.jsp" >
+			<jsp:param value="${pid}" name="pid"/>
+			<jsp:param value="${page}" name="page"/>
+		</jsp:include>
 	</div>
 </div>

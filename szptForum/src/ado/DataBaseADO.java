@@ -212,15 +212,15 @@ public class DataBaseADO {
 		}
 		return list.size()==0?null:list;
 	}
-	//根据页面page参数，获得page*10-page*10+10位置的数据,plateid:帖子所属板块id
+	//根据页面page参数，获得page*20-page*20+20位置的数据,plateid:帖子所属板块id,从第0页开始
 	public List<Post>GetPostWithPage(int page,int plateid){
 		List<Post>list = new ArrayList<Post>();
 		String sql = "select * from posts where plateid=? limit ?,?";
 		try {
 			PreparedStatement prestmt = this.conn.prepareStatement(sql);
 			prestmt.setInt(1, plateid);
-			prestmt.setInt(2, page*10);
-			prestmt.setInt(3, 10);
+			prestmt.setInt(2, page*20);
+			prestmt.setInt(3, 20);
 			ResultSet rs = prestmt.executeQuery();
 		
 			while(rs.next()) {
@@ -252,7 +252,25 @@ public class DataBaseADO {
 		}
 		return 0;
 	}
-	
+	// 简单的根据板块id，作者，标题创建一个帖子
+	public boolean InsertPost(Object plateid,Object author,Object title) {
+		String sql = "insert into posts(creatorname,title,plateid) values(?,?,?)";
+		return this.preinsert_auto(sql, author,title,plateid);
+	}
+	// 获得最后插入的一个帖子的id
+	public int getIDPostLast(int plateid) {
+		String sql = "select * from posts where plateid=?";
+		ResultSet rs = this.prequery_auto(sql, plateid);
+		try {
+			rs.last();
+			return rs.getInt("id");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
 	/*========================================*/
 	/*板块部分	  								  */
 	/*========================================*/
@@ -328,5 +346,36 @@ public class DataBaseADO {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	/*========================================*/
+	/*帖子评论部分	  								  */
+	/*========================================*/
+	// 根据帖子id，获得该帖子时间最晚的一个评论
+	public PostComment getLastlyPostComment(int id) {
+		String sql = "select * from post_comment where postid=? order by time DESC";
+		ResultSet rs = this.prequery_auto(sql, id);
+		try {
+			if(rs.next()) {
+				PostComment postcomment = new PostComment();
+				postcomment.setPostid(rs.getInt("postid"));
+				postcomment.setTime(rs.getTimestamp("time"));
+				postcomment.setUsername(rs.getString("username"));
+				postcomment.setContent(rs.getString("content"));
+				postcomment.setAgainstcount(rs.getInt("againstcount"));
+				postcomment.setAgreecount(rs.getInt("agreecount"));
+				return postcomment;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+		
+	}
+	// 简单的根据postid,username,content插入一个帖子评论
+	public boolean InsertPostComment(int postid,String username,String content) {
+		String sql = "insert into post_comment(postid,username,content) values(?,?,?)";
+		return this.preinsert_auto(sql, postid,username,content);
 	}
 }

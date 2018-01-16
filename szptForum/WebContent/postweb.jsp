@@ -11,3 +11,6 @@
 <jsp:include page="forumweb.jsp">
 	<jsp:param value="${id}" name="id"/>
 </jsp:include>
+<jsp:include page="Reply.jsp">
+	<jsp:param value="${id}" name="postid"/>
+</jsp:include>

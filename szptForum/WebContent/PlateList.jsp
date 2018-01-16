@@ -50,12 +50,12 @@
 							<td class="fl_g" width="49.9%">
 								<div class="fl_icn_g" style="width: 64px;">
 									<a href="#"><img
-										src="#" align="left"
-										alt=""></a>
+										src="Image/0df431adcbef76096709930527dda3cc7cd99e2d.jpg" align="left"
+										alt="" width="64" height="64"></a>
 								</div>
 								<dl style="margin-left: 64px;">
 									<dt>
-										<a href="PlateWeb.jsp?pid=${plates.getId()}&page=1">${plates.getName()}</a>
+										<a href="PlateWeb.jsp?pid=${plates.getId()}&page=0">${plates.getName()}</a>
 									</dt>
 									<dd>
 										<em>帖数: <span title="37175"><%

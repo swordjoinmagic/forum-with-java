@@ -20,7 +20,7 @@
 	request.setAttribute("postlist", postlist);
 %>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link rel="stylesheet" type="text/css" href="./CSS/style_11_common.css">
 	<link rel="stylesheet" id="css_widthauto" type="text/css" href="./CSS/style_11_widthauto.css">
 	<link rel="stylesheet" type="text/css" href="./CSS/temp_style.css">
