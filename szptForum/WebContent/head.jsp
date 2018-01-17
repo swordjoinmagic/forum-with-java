@@ -7,6 +7,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<%@page import="bean.forum.*,ado.DataBaseADO" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -15,6 +16,24 @@
 	<link rel="stylesheet" type="text/css" href="./CSS/temp_style.css">
 	<script src="JS/jquery-3.2.1.min.js"></script>
 </head>
+<%
+	DataBaseADO adoo = DataBaseADO.getAdo();
+	String username = "";
+	// 获得上传头像的用户的名字（id）
+	Cookie[] cookies = request.getCookies();
+	if(cookies!=null){
+		for(Cookie cookie:cookies) {
+			if(cookie.getName().equals("username")) {
+				username = cookie.getValue();
+			}
+		}
+	}
+	if(!username.equals("")){
+		// 根据用户名找到一名用户
+		User user = adoo.getUserwithId(username);
+		pageContext.setAttribute("user", user);
+	}
+%>
 <style>
 	html{
 		background:url("Image/jungle.jpg");
@@ -43,17 +62,17 @@
 						<!--用户头像-->
 						<div>
 							<a href="#" style="float:right;"><img
-								src="https://rpg.blue/fux2.uc/data/avatar/000/11/02/81_avatar_small.jpg"
-								onerror="#"></a>
+								src="${user.getAvater()}"
+								onerror="this.onerror=null;this.src='https://rpg.blue/fux2.uc/images/noavatar_big.gif'" width="50" height="50"></a>
 						</div>
 						<!--用户姓名与设置-->
 						<p>
 							<strong class="vwmy"><a
-								href="http://rpg.blue/home.php?mod=space&amp;uid=110281"
+								href="#"
 								target="_blank" title="访问我的空间">${cookie.username.value} </a></strong> <span class="pipe">|</span>
-							<a href="http://rpg.blue/home.php?mod=spacecp">设置</a> <span
+							<a href="ChangeAvater.jsp">设置</a> <span
 								class="pipe">|</span> <a
-								href="#">退出</a>
+								href="/szptForum/ClearLoginStatus.bin">退出</a>
 						</p>
 						<p>
 					

@@ -3,7 +3,7 @@
 		用于展示一个具体的帖子的内容
 	*/
 %>
-<%@page import="bean.forum.PostCommentMiddleComment"%>
+<%@page import="bean.forum.PostCommentMiddleComment,bean.forum.User"%>
 <%@page import="ado.DataBaseADO"%>
 <%@page import="bean.forum.PostComment"%>
 <%@page import="java.util.*" %>
@@ -65,6 +65,15 @@
 	
 	<%//将数据库中的所有对该帖子的回复都拿出来  %>
 	<c:forEach items="${postcommentlist}" var="postcomment">
+		<%
+			//得到回复者
+			String username = ((PostComment)pageContext.getAttribute("postcomment")).getUsername();
+			if(!username.equals("")){
+			// 根据用户名找到一名用户
+			User user = DataBaseADO.getAdo().getUserwithId(username);
+			pageContext.setAttribute("User", user);
+	}
+		%>
 		<!--一个楼层-->
 		<div class="buidling">
 			<table class="plhin"
@@ -77,7 +86,7 @@
 							<div id="favatar2635248" class="pls favatar">
 								<div class="pi">
 									<div class="authi">
-										<a href="http://rpg.blue/home.php?mod=space&amp;uid=333833"
+										<a href="#"
 											target="_blank" class="xw1">${postcomment.getUsername()}</a>
 									</div>
 								</div>
@@ -91,9 +100,8 @@
 									<div class="avatar">
 										<a href="#"
 											class="avtm" target="_blank">
-											<img
-											file="https://rpg.blue/fux2.uc/data/avatar/000/33/38/33_avatar_big.jpg"
-											src="https://rpg.blue/fux2.uc/data/avatar/000/33/38/33_avatar_big.jpg"
+											<img file="#" src="${User.getAvater()}"
+											onerror="this.onerror=null;this.src='https://rpg.blue/fux2.uc/images/noavatar_big.gif'"
 											>
 										</a>
 									</div>

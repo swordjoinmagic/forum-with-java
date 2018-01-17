@@ -49,23 +49,6 @@
 				</c:when>					
 			</c:choose>
 		</div>
-		<!-- <div class="pg">
-			<strong>1</strong><a href="http://rpg.blue/forum-605-2.html">2</a><a
-				href="http://rpg.blue/forum-605-3.html">3</a><a
-				href="http://rpg.blue/forum-605-4.html">4</a><a
-				href="http://rpg.blue/forum-605-5.html">5</a><a
-				href="http://rpg.blue/forum-605-6.html">6</a><a
-				href="http://rpg.blue/forum-605-7.html">7</a><a
-				href="http://rpg.blue/forum-605-8.html">8</a><a
-				href="http://rpg.blue/forum-605-9.html">9</a><a
-				href="http://rpg.blue/forum-605-10.html">10</a><a
-				href="http://rpg.blue/forum-605-108.html" class="last">... 108</a><label><input
-				type="text" name="custompage" class="px" size="2"
-				title="输入页码，按回车快速跳转" value="1"
-				onkeydown="if(event.keyCode==13) {window.location='forum.php?mod=forumdisplay&amp;fid=605&amp;page='+this.value;; doane(event);}"><span
-				title="共 108 页"> / 108 页</span></label><a
-				href="http://rpg.blue/forum-605-2.html" class="nxt">下一页</a>
-		</div>-->
 	</span> 
 	<span class="pgb y"><a href="PlateWeb.jsp?pid=${pid}&page=${mypage-1}">返&nbsp;回</a></span>
 	<!-- 发帖 --> 

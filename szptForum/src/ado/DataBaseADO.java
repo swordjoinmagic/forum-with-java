@@ -8,6 +8,7 @@ import bean.forum.Plates;
 import bean.forum.Post;
 import bean.forum.PostComment;
 import bean.forum.PostCommentMiddleComment;
+import bean.forum.User;
 
 public class DataBaseADO {
 	private final static DataBaseADO ADO = new DataBaseADO();
@@ -163,8 +164,30 @@ public class DataBaseADO {
 		}
 		return false;
 	}
-	
-	
+	//根据用户名返回一名用户
+	public User getUserwithId(String name) {
+		String sql = "select * from user where name=?";
+		ResultSet rs = this.prequery_auto(sql, name);
+		try {
+			if(rs.next()) {
+				User user = new User();
+				user.setName(name);
+				user.setAvater(rs.getString("avater"));
+				user.setEmail(rs.getString("email"));
+				user.setPassword(rs.getString("password"));
+				return user;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	// 更新用户的头像
+	public boolean updateUserAvater(String avaterAddress,String username) {
+		String sql = "update user set avater=? where name=?";
+		return this.preupdate(sql, avaterAddress,username);
+	}
 	
 	/*========================================*/
 	/*帖子部分	  								  */
@@ -270,6 +293,16 @@ public class DataBaseADO {
 			e.printStackTrace();
 		}
 		return 0;
+	}
+	// 更新这个帖子的查看数
+	public boolean updatePostViewCount(int viewcount,int postid) {
+		String sql = "update posts set viewcount=? where id=?";
+		return this.preupdate(sql, viewcount,postid);
+	}
+	// 更新这个帖子的回复数
+	public boolean updatePostReplyCount(int replycount,int postid) {
+		String sql = "update posts set replycount=? where id=?";
+		return this.preupdate(sql, replycount,postid);
 	}
 	
 	/*========================================*/

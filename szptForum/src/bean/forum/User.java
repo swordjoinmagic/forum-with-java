@@ -12,8 +12,15 @@ public class User {
 	private String name;
 	private String password;
 	private String email;
+	private String avater;	//Í·Ïñ
 	public String getName() {
 		return name;
+	}
+	public String getAvater() {
+		return avater;
+	}
+	public void setAvater(String avater) {
+		this.avater = avater;
 	}
 	public void setName(String name) {
 		this.name = name;

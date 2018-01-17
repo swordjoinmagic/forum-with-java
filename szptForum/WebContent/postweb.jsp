@@ -5,6 +5,17 @@
 <%
 	String id = request.getParameter("id");
 	pageContext.setAttribute("id", id);
+	
+	Post post = new Post();
+	post.setId(Integer.parseInt(id));
+	post.init();
+	// 每有一个用户点击帖子，帖子点击量就增加1
+	int viewcount = post.getViewcount();
+	System.out.println("查看数："+viewcount);
+	// 更新数据库
+	DataBaseADO.getAdo().updatePostViewCount(viewcount+1, post.getId());
+	System.out.println("查看数+1："+(viewcount+1));
+
 %>
 
 <%@ include file="head.jsp" %>

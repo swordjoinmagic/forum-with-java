@@ -2,6 +2,7 @@
 	pageEncoding="utf-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page import="bean.forum.*,ado.DataBaseADO" %>
 <%
 	// 要回一个帖子，要知道的数据有：
 	/*
@@ -11,6 +12,20 @@
 	*/
 	String postid = request.getParameter("postid");
 	pageContext.setAttribute("postid", postid);
+	
+	String username = "";
+	// 获得用户的名字（id）
+	Cookie[] cookies = request.getCookies();
+	for(Cookie cookie:cookies) {
+		if(cookie.getName().equals("username")) {
+			username = cookie.getValue();
+		}
+	}
+	if(!username.equals("")){
+		// 根据用户名找到一名用户
+		User user = DataBaseADO.getAdo().getUserwithId(username);
+		pageContext.setAttribute("User", user);
+	}
 %>
 <div id="f_pst" class="pl bm bmw">
 	<form method="post" id="fastpostform" action="/szptForum/CreatePostComment.bin">
@@ -21,7 +36,7 @@
 					<c:if test="${cookie.isLogin.value==\"true\"}">
 						<td class="pls">
 							<div class="avatar avtm">
-								<img src="https://rpg.blue/fux2.uc/data/avatar/000/11/02/81_avatar_big.jpg" onerror="this.onerror=null;this.src='https://rpg.blue/fux2.uc/images/noavatar_big.gif'">
+								<img src="${User.getAvater()}" onerror="this.onerror=null;this.src='https://rpg.blue/fux2.uc/images/noavatar_big.gif'">
 							</div>
 						</td>				
 					</c:if>

@@ -59,9 +59,6 @@ public class CreatePostComment extends HttpServlet{
 				// 获得板块id
 				plateid = requests.getParameter("plateid");
 				
-				System.out.println("posttitle:"+PostTitle);
-				System.out.println("plateid:"+plateid);
-				System.out.println("author:"+author);
 				// 检查数据合法性，如果不合法那么重定向到发表帖子那个页面
 				if(!vail()) {
 					response.sendRedirect("CreatePost.jsp?plateid="+plateid);
@@ -88,6 +85,10 @@ public class CreatePostComment extends HttpServlet{
 								
 				// 对帖子发表评论
 				ado.InsertPostComment(Integer.parseInt(postid), author, editorValue,height+1);
+				
+				// 更新帖子的回复数
+				ado.updatePostReplyCount(height+1, Integer.parseInt(postid));
+				
 				// 重定向到帖子页面
 				response.sendRedirect("postweb.jsp?id="+postid);				
 			}

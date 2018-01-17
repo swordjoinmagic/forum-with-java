@@ -12,6 +12,7 @@
 	<link rel="stylesheet" type="text/css" href="./CSS/temp_style.css">
 	<script src="JS/jquery-3.2.1.min.js"></script>
 </head>
+<%@ include file="head.jsp" %>
 <div class="mn" id="main_message">
 	<div class="bm">
 		<!-- 登录提示信息 -->
