@@ -304,6 +304,29 @@ public class DataBaseADO {
 		String sql = "update posts set replycount=? where id=?";
 		return this.preupdate(sql, replycount,postid);
 	}
+	// 找到前十个点击量最高的帖子,返回一个列表 
+	public List<Post>find_MAX10Post(){
+		String sql = "select * from posts order by viewcount DESC limit 0,10";
+		ResultSet rs = this.queryselect(sql);
+		List<Post>list = new ArrayList<>();
+		try {
+			while(rs.next()) {
+				Post post = new Post();
+				post.setCreatetime(rs.getTimestamp("createtime"));
+				post.setCreatorname(rs.getString("creatorname"));
+				post.setId(rs.getInt("id"));
+				post.setPlateid(rs.getInt("plateid"));
+				post.setReplycount(rs.getInt("replycount"));
+				post.setTitle(rs.getString("title"));
+				post.setViewcount(rs.getInt("viewcount"));
+				list.add(post);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
 	
 	/*========================================*/
 	/*板块部分	  								  */

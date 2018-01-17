@@ -69,10 +69,10 @@
 											pageContext.setAttribute("lastlypost", lastlypost);
 										%>
 										<a
-											href="#"
-											class="xi2">【${lastlypost.getTitle()}】</a> <cite><span
-											title="2018-1-13 00:03">${lastlypost.getCreatetime()}</span> <a
-											href="#">${lastlypost.getCreatorname()}</a></cite>
+											href="postweb.jsp?id=${lastlypost.getId()}"
+											class="xi2">${lastlypost.getTitle()}</a> <cite><span
+											title="${lastlypost.getCreatetime()}">${lastlypost.getCreatetime()}</span> 
+											<a>${lastlypost.getCreatorname()}</a></cite>
 									</dd>
 								</dl>
 							</td>
