@@ -46,7 +46,7 @@
 			<!--大标题-->
 			<h2>
 				<a href="index.jsp" title="Project1"><img
-					src="https://rpg.blue/template/lightsail_mwt1/extend/img/logo.png" alt="Project1"
+					src="Image/logo.png" alt="Project1"
 					border="0"></a>
 			</h2>
 			<!--登录&&注册-->
@@ -129,6 +129,10 @@
 					hidefocus="true">搜索</a></li>
 				<li id="mn_N9ec7"><a href="index.jsp"
 					hidefocus="true">广场</a></li>
+				<li id="mn_N9ec7"><a href="index.jsp"
+					hidefocus="true">校园生活</a></li>
+				<li id="mn_N9ec7"><a href="index.jsp"
+					hidefocus="true">论坛游戏</a></li>	
 			</ul>
 		</div>
 		<div class="p_pop h_pop" id="mn_userapp_menu" style="display: none"></div>

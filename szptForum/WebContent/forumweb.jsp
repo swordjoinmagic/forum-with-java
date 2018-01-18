@@ -18,8 +18,16 @@
 	// 通过帖子id查询关于该帖子的信息
 	post.init();
 	creator.init(post.getCreatorname());
+	
+	// 获得page参数，如果拿不到，那么默认为第0页
+	String mypages = request.getParameter("page");
+	if(mypages==null || mypages.equals("")){
+		mypages = "0";	//#默认为1
+	}
+	int mypage = Integer.parseInt(mypages);
+	
 	// 通过帖子id找到所有该帖子的回复信息,并且存入本次request中
-	List<PostComment>list = DataBaseADO.getAdo().getallpostcomment(post.getId());
+	List<PostComment>list = DataBaseADO.getAdo().getPostCommentwithPage(mypage, post.getId());
 	request.setAttribute("postcommentlist", list);
 %>
 <head>
@@ -107,16 +115,18 @@
 									</div>
 								</div>
 								<dl class="pil cl">
+								<!-- 
 									<dt>在线时间</dt>
 									<dd>1545 小时</dd>
-									<dt>注册时间</dt>
-									<dd>2013-2-14</dd>
 									<dt>帖子</dt>
 									<dd>
 										<font color="#000000"><a
 											href="#"
 											target="_blank" class="xi2">354</a></font>
 									</dd>
+									-->
+									<dt>注册时间</dt>
+									<dd>2013-2-14</dd>
 								</dl>
 								
 								<ul class="xl xl2 o cl">
@@ -173,11 +183,17 @@
 											
 											<%//循环显示所有楼层评论信息 %>
 											<c:forEach items="${postcmclist}" var="postcmc">
+												<%
+													//通过用户名得到一个用户
+													PostCommentMiddleComment pcmc1 = (PostCommentMiddleComment)pageContext.getAttribute("postcmc");
+													User u = ado.getUserwithId(pcmc1.getUsername());
+													pageContext.setAttribute("u", u);
+												%>
 												<!--具体点评信息-->
 												<div class="pstl xs1 cl">
 													<!--名称与头像-->
 													<div class="psta vm">
-														<a href="#" c="1"><img src="#"></a>
+														<a href="#" c="1"><img src="${u.getAvater()}" onerror="this.onerror=null;this.src='https://rpg.blue/fux2.uc/images/noavatar_big.gif'"></a>
 														<a href="#" class="xi2 xw1">${postcmc.getUsername()}</a>
 													</div>
 													<!--具体信息-->

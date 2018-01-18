@@ -327,7 +327,7 @@ public class DataBaseADO {
 		}
 		return list;
 	}
-	
+
 	/*========================================*/
 	/*板块部分	  								  */
 	/*========================================*/
@@ -453,4 +453,34 @@ public class DataBaseADO {
 		String sql = "insert into posts_comment_middle_comment(postid,username,height,content) values(?,?,?,?)";
 		return this.preinsert_auto(sql,postid,username,height,content);
 	}
+	// 根据page和id参数，获得一页里的所有评论
+	public List<PostComment>getPostCommentwithPage(int page,int postid){
+		List<PostComment>list = new ArrayList<>();
+		String sql = "select * from post_comment where postid=? limit ?,?";
+//		ResultSet rs = this.prequery_auto(sql, postid,page*10,10);
+		try {
+			PreparedStatement pre = this.conn.prepareStatement(sql);
+			pre.setInt(1,postid);
+			pre.setInt(2, page*10);
+			pre.setInt(3, 10);
+			ResultSet rs = pre.executeQuery();
+			while(rs.next()) {
+				PostComment postcomment = new PostComment();
+				postcomment.setUsername(rs.getString("username"));
+				postcomment.setPostid(rs.getInt("postid"));
+				postcomment.setHeight(rs.getInt("height"));
+				postcomment.setContent(rs.getString("content"));
+				postcomment.setTime(rs.getTimestamp("time"));
+				postcomment.setAgreecount(rs.getInt("agreecount"));
+				postcomment.setAgainstcount(rs.getInt("againstcount"));
+				
+				list.add(postcomment);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+
 }

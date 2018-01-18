@@ -7,6 +7,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page import="bean.forum.*,ado.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%
 	String p = request.getParameter("page");
@@ -57,36 +58,36 @@
 				<tr>
 					<!--图标-->
 					<td class="icn">
-						<img src="static/image/common/pin_1.gif" alt="本版置顶">
+						<img src="Image/pin_3.gif" alt="本版置顶">
 					</td>
 					<!--标题信息-->
 					<th class="common">
 						<em>
 							<a title="版务" href="#">
 							<img style="vertical-align: middle; padding-right: 4px;"
-								src="#" alt="版务">
+								src="Image/banwu.png" alt="版务">
 							</a>
 						</em>					
 						<a href="#"
 						style="font-weight: bold; color: #2B65B7;"
-						class="s xst">RMXP 讨论区版规</a>
+						class="s xst">讨论区版规</a>
 					</th>
 					<!--作者-->
 					<td class="by"><cite> <a
 							href="#" c="1"
-							style="color: #006666;" mid="card_378">RyanBern</a></cite> <em><span>2017-10-13</span></em>
+							style="color: #006666;" mid="card_378">sjm</a></cite> <em><span>2017-10-13</span></em>
 					</td>
 					<!--查看与回复-->
 					<td class="num"><a
-						href="#" class="xi2">1</a><em>217</em></td>
+						href="#" class="xi2">0</a><em>0</em></td>
 					<!--最后发表-->
 					<td class="by">
 						<cite><a
-							href="#" c="1" mid="card_1543">RyanBern</a>
+							href="#" c="1" mid="card_1543">sjm</a>
 						</cite> 
 						<em><a
 							href="#">2017-10-23
-								15:14</a>
+								15:14</a> 
 						</em>
 					</td>
 				</tr>
@@ -104,6 +105,12 @@
 			</tbody>
 			
 			<c:forEach items="${postlist}" var="post">
+				<%
+					// 得到发帖时间最晚的那个帖子评论
+					Post p1 = (Post)pageContext.getAttribute("post");
+					PostComment postcomment = ado.getLastlyPostComment(p1.getId());
+					pageContext.setAttribute("p1", postcomment);
+				%>
 				<!--普通帖子-->
 				<tbody id="normalthread">
 					<tr>
@@ -135,10 +142,9 @@
 						<!--最后发表-->
 						<td class="by">
 							<cite>
-								<a href="#" c="1">990255918</a>
+								<a href="#" c="1">${p1.getUsername() }</a>
 							</cite>
-							<em><a href="#">2017-11-27
-										12:16
+							<em><a href="#">${p1.getTime() }
 								</a>
 							</em>
 						</td>

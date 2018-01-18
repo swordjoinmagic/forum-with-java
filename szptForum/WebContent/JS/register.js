@@ -4,8 +4,10 @@
  */
 function checksubmit(){
 	if(checkusername('u6r66')&&checkpassword('p6r66','p26r66')&&checkpassword('p26r66','p6r66')&&checkemail('e6r66')){
+		alert("表单检查正确");
 		return true;
 	}else{
+		alert("表单检查错误");
 		return false;
 	}
 }

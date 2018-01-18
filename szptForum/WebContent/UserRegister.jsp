@@ -24,13 +24,13 @@
 			
 				<div class="bm_h bbs" id="main_hnav">
 				<span class="y">
-				<a href="member.php?mod=logging&amp;action=login&amp;referer=https%3A%2F%2Frpg.blue%2F.%2F" onclick="showWindow('login', this.href);return false;" class="xi2">已有帐号？现在登录</a>
+				<a href="Login.jsp" class="xi2">已有帐号？现在登录</a>
 				</span>
 				<h3 id="layer_reginfo_t" class="xs2">
 				注册会员</h3>
 				</div>
 				<p id="returnmessage4"></p>
-				<form method="post" autocomplete="off" name="register" id="registerform" enctype="multipart/form-data" onsubmit="checksubmit();return false;" action="#">
+				<form method="post" name="register" id="registerform" action="Treament/treate_register.jsp">
 					<div id="layer_reg" class="bm_c">
 						<div class="mtw">
 							<div id="reginfo_a">
@@ -164,7 +164,7 @@
 											<th>&nbsp;</th>
 											<td><span id="reginfo_a_btn"> <em>&nbsp;</em>
 												<button class="pn pnc" id="registerformsubmit" type="submit"
-														name="regsubmit" value="true" tabindex="1">
+														name="regsubmit" value="true" tabindex="1" onsubmit="onsubmit()">
 														<strong>提交</strong>
 													</button>
 											</span></td>

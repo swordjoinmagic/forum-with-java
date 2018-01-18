@@ -50,7 +50,7 @@
 							<td class="fl_g" width="49.9%">
 								<div class="fl_icn_g" style="width: 64px;">
 									<a href="#"><img
-										src="Image/0df431adcbef76096709930527dda3cc7cd99e2d.jpg" align="left"
+										src="Image/plates${plates.getId()}.jpg" align="left"
 										alt="" width="64" height="64"></a>
 								</div>
 								<dl style="margin-left: 64px;">

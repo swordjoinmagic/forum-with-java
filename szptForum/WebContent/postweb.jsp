@@ -5,6 +5,13 @@
 <%
 	String id = request.getParameter("id");
 	pageContext.setAttribute("id", id);
+	String mypages = request.getParameter("page");
+	if(mypages==null || mypages.equals("")){
+		mypages = "0";	//#默认为1
+	} 
+	int mypage = Integer.parseInt(mypages);
+	
+	pageContext.setAttribute("page", mypage);
 	
 	Post post = new Post();
 	post.setId(Integer.parseInt(id));
@@ -17,11 +24,25 @@
 	System.out.println("查看数+1："+(viewcount+1));
 
 %>
-
+		<style>
+			pre{
+				background: gainsboro;
+				border: 1px solid;
+			}
+		</style>
 <%@ include file="head.jsp" %>
-<jsp:include page="forumweb.jsp">
-	<jsp:param value="${id}" name="id"/>
-</jsp:include>
+<div id="wp" class="wp">
+	<div id="ct" class="wp cl">
+		<jsp:include page="forumweb.jsp">
+			<jsp:param value="${id}" name="id"/>
+			<jsp:param value="${page}" name="page" />
+		</jsp:include>
+		<jsp:include page="PostTail.jsp">
+			<jsp:param value="${id}" name="id"/>
+			<jsp:param value="${page}" name="page" />
+		</jsp:include>
+	</div>
+</div>
 <jsp:include page="Reply.jsp">
 	<jsp:param value="${id}" name="postid"/>
 </jsp:include>
